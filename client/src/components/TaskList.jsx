@@ -10,12 +10,26 @@ const TaskList = () => {
     ];
 
     return (
-        <div>
-            <h3>My Tasks</h3>
-            <ul>
+        <div className="p-6 bg-white shadow-md rounded-lg">
+            <h3 className="text-2xl font-semibold mb-4">My Tasks</h3>
+            <ul className="space-y-2">
                 {tasks.map((task) => (
-                    <li key={task.id}>
-                        {task.title} - {task.status}
+                    <li
+                        key={task.id}
+                        className="p-4 bg-gray-100 rounded-lg border border-gray-300 hover:bg-gray-200 transition-colors"
+                    >
+                        <div className="flex justify-between">
+                            <span className="font-medium">{task.title}</span>
+                            <span
+                                className={`text-sm ${
+                                    task.status === "Completed"
+                                        ? "text-green-500"
+                                        : "text-red-500"
+                                }`}
+                            >
+                                {task.status}
+                            </span>
+                        </div>
                     </li>
                 ))}
             </ul>

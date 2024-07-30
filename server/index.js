@@ -2,6 +2,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require("body-parser");
+
+//Routes
+const authRoutes = require("./routes/auth");
+const tasksRoutes = require("./routes/tasks");
+const groupsRoutes = require("./routes/groups");
+const usersRoutes = require("./routes/user");
+const testRoutes = require("./routes/test");
+
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
 
@@ -12,21 +21,24 @@ const app = express();
 connectDB();
 
 //Middlewares
-app.use(cors());
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(
-//     cors({
-//         origin: "http://localhost:5173",
-//         credentials: true,
-//     })
-// );
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow these methods
+        allowedHeaders: "Content-Type,Authorization", // Allow these headers
+    })
+);
 
 // Define routes
-// app.use("/api/auth", require("./routes/auth"));
-// app.use("/api/users", require("./routes/users"));
-// app.use("/api/tasks", require("./routes/tasks"));
-// app.use("/api/groups", require("./routes/groups"));
+app.use("/", testRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/user", usersRoutes);
+app.use("/api/tasks", tasksRoutes);
+//app.use("/api/groups", groupsRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
