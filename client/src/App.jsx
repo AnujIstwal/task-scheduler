@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
@@ -16,6 +16,7 @@ function App() {
         !!localStorage.getItem("token") || !!sessionStorage.getItem("token")
     );
     const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -29,7 +30,7 @@ function App() {
                 const userId = decodedToken.userId;
 
                 try {
-                    const response = await axios.get(`/api/user/${userId}`, {
+                    const response = await axios.get(`/api/users/${userId}`, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -44,20 +45,31 @@ function App() {
         fetchUserData();
     }, [isAuth]);
 
+    useEffect(() => {
+        if (!isAuth && !user) {
+            navigate("/login");
+        }
+    }, [isAuth, user]);
+
+    console.log({ user });
+
+    const handleLogout = () => {
+        setUser(null);
+        setAuth(false);
+    };
+
     return (
-        <Router>
-            <div className="w-full">
-                <Routes>
-                    <Route path="/signup" element={<Signup />} />
-                    <Route
-                        path="/login"
-                        element={<Login setAuth={setAuth} />}
-                    />
-                    <Route path="/" element={<Home user={user} />} />
-                </Routes>
-                <Toaster position="top-center" />
-            </div>
-        </Router>
+        <div className="w-full">
+            <Routes>
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login setAuth={setAuth} />} />
+                <Route
+                    path="/"
+                    element={<Home user={user} handleLogout={handleLogout} />}
+                />
+            </Routes>
+            <Toaster position="top-center" />
+        </div>
     );
 }
 

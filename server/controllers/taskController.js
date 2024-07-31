@@ -14,7 +14,9 @@ exports.createTask = async (req, res) => {
 // Get all tasks
 exports.fetchAll = async (req, res) => {
     try {
-        const tasks = await Task.find();
+        const tasks = await Task.find()
+            .populate("createdBy", "email username")
+            .populate("assignedTo", "email username");
         res.json(tasks);
     } catch (err) {
         res.status(500).json({ error: err.message });

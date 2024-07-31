@@ -42,7 +42,7 @@ const Login = ({ setAuth }) => {
         } catch (error) {
             console.error("Error logging in:", error.message);
             setLoading(false);
-            toast.error("Login Failed", { id: loadingId });
+            toast.error(error.message, { id: loadingId });
         }
         setLoading(false);
     };

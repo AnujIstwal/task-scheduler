@@ -36,7 +36,7 @@ app.use(
 // Define routes
 app.use("/", testRoutes);
 app.use("/api/auth", authRoutes);
-app.use("/api/user", usersRoutes);
+app.use("/api/users", usersRoutes);
 app.use("/api/tasks", tasksRoutes);
 //app.use("/api/groups", groupsRoutes);
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
-const TaskModal = ({ isOpen, onClose, userId }) => {
+const TaskModal = ({ users, isOpen, onClose, userId, setTaskCreated }) => {
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -21,8 +22,10 @@ const TaskModal = ({ isOpen, onClose, userId }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setTaskCreated(false);
+        const loadingId = toast.loading("Creating Task");
         try {
-            await axios.post(
+            const response = await axios.post(
                 "/api/tasks",
                 {
                     ...formData,
@@ -32,8 +35,15 @@ const TaskModal = ({ isOpen, onClose, userId }) => {
                     withCredentials: true,
                 }
             );
+            console.log({ response });
+            toast.success("Task created sucessfully", {
+                id: loadingId,
+                duration: 4000,
+            });
+            setTaskCreated(true);
             onClose(); // Close modal after successful submission
         } catch (error) {
+            toast.error(error.message, { id: loadingId, duration: 4000 });
             console.error("Error creating task:", error);
         }
     };
@@ -72,13 +82,21 @@ const TaskModal = ({ isOpen, onClose, userId }) => {
                             <label className="block text-sm font-medium mb-1">
                                 Assigned To
                             </label>
-                            <input
-                                type="text"
+                            <select
                                 name="assignedTo"
                                 value={formData.assignedTo}
                                 onChange={handleChange}
                                 className="w-full p-2 border border-gray-300 rounded"
-                            />
+                            >
+                                <option value="">Select User</option>
+                                {users?.map((user) => (
+                                    <option key={user._id} value={user._id}>
+                                        {userId === user._id
+                                            ? "Self"
+                                            : user.email}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
                         <div className="mb-4">
                             <label className="block text-sm font-medium mb-1">
