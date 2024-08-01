@@ -8,7 +8,7 @@ import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://task-scheduler-server-psi.vercel.app";
 axios.defaults.withCredentials = true;
 
 function App() {
