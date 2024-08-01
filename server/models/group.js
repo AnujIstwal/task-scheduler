@@ -14,9 +14,11 @@ const groupSchema = new Schema(
                 ref: "User",
             },
         ],
-        inviteLink: {
-            type: String,
-            unique: true,
+
+        createdBy: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
         },
     },
     { timestamps: true }

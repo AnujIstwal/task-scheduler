@@ -6,12 +6,6 @@
 /* Import Tailwind CSS utility styles */
 @tailwind utilities;
 
-#root {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
 * {
     padding: 0;
     margin: 0;
@@ -20,6 +14,5 @@
 
 body {
     margin: 0;
-    display: flex;
     place-items: center;
 }

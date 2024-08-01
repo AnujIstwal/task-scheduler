@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import EditTaskModal from "./EditTaskModal";
 
-const TaskDetails = ({ users, tasks, userId, setTaskUpdated }) => {
-    console.log({ tasks });
+const TaskDetails = ({
+    users,
+    tasks,
+    userId,
+    setTaskUpdated,
+    getRandomColorClass,
+}) => {
+    // console.log({ tasks });
 
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [taskId, setTaskId] = useState("");
@@ -37,16 +43,36 @@ const TaskDetails = ({ users, tasks, userId, setTaskUpdated }) => {
                             <td className="px-4 py-2 border">
                                 {task.createdBy.email}
                             </td>
-                            <td className="px-4 py-2 border">
-                                {task.assignedTo?.username || "Unassigned"}
+                            <td className="flex gap-2 px-4 py-2 border items-center">
+                                <div
+                                    className={`flex-shrink-0 h-8 w-8 rounded-full ${getRandomColorClass()} flex items-center justify-center text-white`}
+                                >
+                                    {task.assignedTo?.username
+                                        .slice(0, 2)
+                                        .toUpperCase()}
+                                </div>
+                                {task.assignedTo?.username}
                             </td>
+
                             <td className="px-4 py-2 border">
                                 {task.priority}
                             </td>
                             <td className="px-4 py-2 border">
                                 {new Date(task.deadline).toLocaleDateString()}
                             </td>
-                            <td className="px-4 py-2 border">{task.status}</td>
+                            <td className="px-4 py-2 border">
+                                <span
+                                    className={`text-sm font-medium rounded-md p-1 ${
+                                        task.status === "completed"
+                                            ? "text-green-500 bg-green-100"
+                                            : task.status === "in progress"
+                                            ? "text-yellow-500 bg-yellow-100"
+                                            : "text-red-500 bg-red-100"
+                                    }`}
+                                >
+                                    {task.status}
+                                </span>
+                            </td>
                             <td className="px-4 py-2 border">
                                 <button
                                     onClick={() => {

@@ -23,7 +23,7 @@ const Login = ({ setAuth }) => {
         try {
             const response = await axios.post("/api/auth/login", formData);
 
-            console.log("Login successfull");
+            //console.log("Login successfull");
             toast.success("Successfully logined", {
                 id: loadingId,
                 duration: 4000,

@@ -16,8 +16,8 @@ function App() {
         !!localStorage.getItem("token") || !!sessionStorage.getItem("token")
     );
     const [user, setUser] = useState(null);
+    const [notifications, setNotifications] = useState([]);
     const navigate = useNavigate();
-
     useEffect(() => {
         const fetchUserData = async () => {
             if (isAuth) {
@@ -45,17 +45,48 @@ function App() {
         fetchUserData();
     }, [isAuth]);
 
+    //fetch the notification by id
     useEffect(() => {
-        if (!isAuth && !user) {
-            navigate("/login");
-        }
-    }, [isAuth, user]);
+        const fetchNotifications = async () => {
+            if (isAuth) {
+                const token =
+                    localStorage.getItem("token") ||
+                    sessionStorage.getItem("token");
 
-    console.log({ user });
+                //decoding the token
+                const decodedToken = jwtDecode(token);
+                const userId = decodedToken.userId;
+                try {
+                    const response = await axios.get(
+                        `/api/notifications/${userId}`,
+                        {
+                            withCredentials: true,
+                        }
+                    );
+                    setNotifications(response.data);
+                } catch (error) {
+                    console.error("Error fetching notifications:", error);
+                }
+            }
+        };
+
+        fetchNotifications();
+    }, [setNotifications, isAuth]);
+
+    // useEffect(() => {
+    //     if (isAuth && location.pathname !== '/') {
+    //         navigate("/");
+    //     }
+    // }, [isAuth]);
+
+    //console.log({ user, notifications });
 
     const handleLogout = () => {
         setUser(null);
         setAuth(false);
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
+        navigate("/login");
     };
 
     return (
@@ -63,10 +94,20 @@ function App() {
             <Routes>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login setAuth={setAuth} />} />
-                <Route
-                    path="/"
-                    element={<Home user={user} handleLogout={handleLogout} />}
-                />
+                {isAuth && user ? (
+                    <Route
+                        path="/"
+                        element={
+                            <Home
+                                user={user}
+                                handleLogout={handleLogout}
+                                notifications={notifications}
+                            />
+                        }
+                    />
+                ) : (
+                    <Route path="*" element={<Login setAuth={setAuth} />} />
+                )}
             </Routes>
             <Toaster position="top-center" />
         </div>

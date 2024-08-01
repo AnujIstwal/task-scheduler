@@ -35,7 +35,7 @@ const TaskModal = ({ users, isOpen, onClose, userId, setTaskCreated }) => {
                     withCredentials: true,
                 }
             );
-            console.log({ response });
+            // console.log({ response });
             toast.success("Task created sucessfully", {
                 id: loadingId,
                 duration: 4000,

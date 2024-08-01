@@ -26,7 +26,7 @@ const Signup = () => {
         setLoading(true);
         try {
             const response = await axios.post("/api/auth/signup", formData);
-            console.log("Registration successful:", response);
+            // console.log("Registration successful:", response);
             toast.success("Registration successful", {
                 id: loadingId,
                 duration: 4000,
