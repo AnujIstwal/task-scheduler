@@ -30,7 +30,8 @@ app.use(
         origin: ["https://task-scheduler-client-jet.vercel.app","http://localhost:5173", "http://localhost:5174"],
         credentials: true,
         methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow these methods
-        allowedHeaders: "Content-Type,Authorization", // Allow these headers
+        allowedHeaders: "Content-Type,Authorization",
+        optionsSuccessStatus: 200// Allow these headers
     })
 );
 
