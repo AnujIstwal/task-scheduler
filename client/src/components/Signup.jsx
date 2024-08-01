@@ -96,7 +96,7 @@ const Signup = () => {
                     </div>
                     <div className="flex justify-center ">
                         <ReCAPTCHA
-                            sitekey="6Lf1yBsqAAAAAGBlJ9U5MHg1IlsxCCDsuqztnUMK" //{process.env.REACT_APP_RECAPTCHA_SITE_KEY}
+                            sitekey="6LdHLh0qAAAAAJ85ugqiKhARcbzS2T3_h6jzX-xL" //{process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                             onChange={handleRecaptchaChange}
                         />
                     </div>
