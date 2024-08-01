@@ -37,3 +37,6 @@ This is a comprehensive task management system built with the MERN stack (MongoD
 ### Task Creation
 ![image](https://github.com/user-attachments/assets/6d759447-e36b-48e0-a3fb-b457febdb6da)
 
+### Group Creation
+![image](https://github.com/user-attachments/assets/3fb76ac0-c67b-43d9-819d-24e0fa64a6e4)
+
