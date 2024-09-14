@@ -1,4 +1,4 @@
-# Task Management System (Clairvolex Task)
+# Task Management System 
 
 ## Overview
 This is a comprehensive task management system built with the MERN stack (MongoDB, Express.js, React, Node.js). It allows users to create tasks, manage groups, assign tasks, and track progress. It also includes a notification system to keep users updated on task statuses.
