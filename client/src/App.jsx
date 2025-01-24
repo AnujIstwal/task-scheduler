@@ -90,7 +90,7 @@ function App() {
     };
 
     return (
-        <div className="w-full">
+        <div className="w-screen">
             <Routes>
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login setAuth={setAuth} />} />
